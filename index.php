@@ -3,33 +3,40 @@
   class User {
 
     public $username;
-    public $email ;
+    private $email ;
 
     public function __construct($username, $email){
         $this->username = $username;
-        $this-> email = $email;
+        $this->email = $email;
     }
 
     public function addFriend(){
-      //return "added a new friend";
+    
       return "$this->username just added a new friend";
+    }
+    //getters / class methods
+    public function getEmail(){
+        return $this->email ;
+    }
+
+    //setters
+    public function setEmail($email){
+        if (strpos($email, '@') > -1 ){
+            $this->email = $email;
+        }
     }
 
   }
+  
 
   $userOne = new User('titan', 'titan@swift.com');
   $userTwo = new User('sphinx', 'sphinx@swift.com');
 
-  echo $userOne->username . '<br>';
-  echo $userOne->email . '<br>';
-  echo $userOne->addFriend() . '<br>';
+  $userOne->setEmail('jocatins@gypsyplanet.com') . '<br/>';
 
 
-  echo $userTwo->username . '<br>';
-  echo $userTwo->email . '<br>';
-
-  //print_r(get_class_vars('User'));
-  print_r(get_class_methods('User'));
+  echo $userOne->getEmail();
+  echo $userTwo->getEmail();
 
 
 ?>
