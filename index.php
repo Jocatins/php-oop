@@ -1,64 +1,28 @@
 <?php 
 
-//Magic Methods
+// Static properties and methods can be accessed 
+//via the class directly and not via the instance of the class
+    class Weather {
+        public static $tempConditions = ['cold', 'mild', 'warm'];
 
-  class User {
+        public static function celsiusToFarenheit($c){
+            return $c * 9 / 5 + 32;
 
-    public $username;
-    protected $email ;
-    public $role = 'member';
-
-    public function __construct($username, $email){
-        $this->username = $username;
-        $this->email = $email;
-    }
-    public function __destruct(){
-        echo " this $this->username was removed. <br/>";
-    }
-    public function __clone(){
-        $this->username = $this->username. '(cloned)<br/>';
-    }
-
-    public function addFriend(){
-    
-      return "$this->username just added a new friend";
-    }
-    public function message(){
-        return "this email - $this->email sent a message";
-    }
-    //getters / class methods
-    public function getEmail(){
-        return $this->email ;
-    }
-
-    //setters
-    public function setEmail($email){
-        if (strpos($email, '@') > -1 ){
-            $this->email = $email;
+        }
+        public static function determineTempCondition($f){
+            if ($f < 40){
+                return self::$tempConditions[0];
+            }else if ($f < 70 ){
+                return self::$tempConditions[1];
+            }else{
+                return self::$tempConditions[2];
+            }
         }
     }
 
-  }
-  class AdminUser extends User {
-      public $level;
-      public $role = 'admin';
-      public function __construct( $username, $email, $level){
-          $this->level = $level;
-          parent::__construct($username, $email);
-      }
-      public function message(){
-        return "this admin email - $this->email sent a message";
-    }
-  }
-  
-
-  $userOne = new User('titan', 'titan@swift.com');
-  $userTwo = new User('sphinx', 'sphinx@swift.com');
-  $userThree = new AdminUser('gypsy', 'gypsy@swift.com', 8);
-
-
-  $userFour = clone $userOne; 
-  echo $userFour->username ; 
+   // print_r(Weather::$tempConditions);
+    //echo Weather::celsiusToFarenheit(10);
+    echo Weather::determineTempCondition(78);
 
 
 ?>
