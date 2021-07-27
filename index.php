@@ -1,37 +1,42 @@
 <?php 
 
-// Static properties and methods can be accessed 
-//via the class directly and not via the instance of the class
-    class Weather {
-        public static $tempConditions = ['cold', 'mild', 'warm'];
+    require('user_validator.php');
 
-        public static function celsiusToFarenheit($c){
-            return $c * 9 / 5 + 32;
-
-        }
-        public static function determineTempCondition($f){
-            if ($f < 40){
-                return self::$tempConditions[0];
-            }else if ($f < 70 ){
-                return self::$tempConditions[1];
-            }else{
-                return self::$tempConditions[2];
-            }
-        }
-    }
-
-   // print_r(Weather::$tempConditions);
-    //echo Weather::celsiusToFarenheit(10);
-    echo Weather::determineTempCondition(78);
-
+  if(isset($_POST['submit'])){
+    // validate entries
+    $validation = new Validator($_POST);
+    $errors = $validation->validateForm();
+  }
 
 ?>
 
 <html lang="en">
 <head>
   <title>PHP OOP</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
   
+  <div class="new-user">
+    <h2>Create a new user</h2>
+    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+
+      <label>username: </label>
+      <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username']) ?? '' ?>">
+      <div class="error">
+        <?php echo $errors['username'] ?? '' ?>
+      </div>
+
+      <label>email: </label>
+      <input type="text" name="email" value="<?php echo htmlspecialchars($_POST['email']) ?? '' ?>">
+      <div class="error">
+        <?php echo $errors['email'] ?? '' ?>
+      </div>
+
+      <input type="submit" value="submit" name="submit">
+
+    </form>
+  </div>
+
 </body>
 </html>
