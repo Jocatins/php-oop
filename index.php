@@ -1,5 +1,7 @@
 <?php 
 
+//Magic Methods
+
   class User {
 
     public $username;
@@ -9,6 +11,12 @@
     public function __construct($username, $email){
         $this->username = $username;
         $this->email = $email;
+    }
+    public function __destruct(){
+        echo " this $this->username was removed. <br/>";
+    }
+    public function __clone(){
+        $this->username = $this->username. '(cloned)<br/>';
     }
 
     public function addFriend(){
@@ -49,15 +57,8 @@
   $userThree = new AdminUser('gypsy', 'gypsy@swift.com', 8);
 
 
-  echo $userTwo->role . '<br/>' ;
-  echo $userThree->role . '<br/>';
-
-  echo $userOne->message() . '<br/>';
-  echo $userThree->message() . '<br/>';
-
-  
-
-  
+  $userFour = clone $userOne; 
+  echo $userFour->username ; 
 
 
 ?>
